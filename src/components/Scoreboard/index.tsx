@@ -3,13 +3,18 @@ import "./Scoreboard.css";
 import CurrentMove from "./CurrentMove";
 import Players from "./Players";
 import Score from "./Score";
+import { IPlayer } from "../../types/interfaces";
 
-export default function Scoreboard() {
+interface ScoreboardProps {
+  players: IPlayer[];
+}
+
+export default function Scoreboard({ players }: ScoreboardProps) {
   return (
     <div className="scoreboard">
-      <Players />
+      <Players players={players} />
       <CurrentMove />
       <Score />
     </div>
-  )
+  );
 }

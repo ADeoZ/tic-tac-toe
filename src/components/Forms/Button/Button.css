@@ -1,0 +1,18 @@
+.form__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 180px;
+  height: 40px;
+  margin: 15px auto;
+  border-radius: 10px;
+  font-size: 18px;
+  background-color: #ff6d00;
+  box-shadow: 3px 4px 9px 2px #8d380026;
+  color: #fff;
+  transition: background-color .2s ease-out;
+}
+
+.form__button:hover {
+  background-color: #ff8124;
+}
