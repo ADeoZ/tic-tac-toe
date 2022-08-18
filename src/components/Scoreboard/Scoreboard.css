@@ -1,0 +1,13 @@
+.scoreboard {
+  max-width: 350px;
+  min-width: 300px;
+  margin: 30px auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid #e4efff;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 3px 6px 12px 0px #929bff1c;
+  font-size: 20px;
+}

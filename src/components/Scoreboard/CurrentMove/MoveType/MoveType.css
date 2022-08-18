@@ -1,0 +1,14 @@
+.scoreboard__movetype {
+  width: 30px;
+  height: 30px;
+}
+
+.scoreboard__movetype_cross {
+  background: url("../../../../img/cross.png") no-repeat;
+  background-size: contain;
+}
+
+.scoreboard__movetype_zero {
+  background: url("../../../../img/zero.png") no-repeat;
+  background-size: contain;
+}

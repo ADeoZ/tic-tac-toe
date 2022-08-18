@@ -1,0 +1,39 @@
+.modal {  
+  justify-content: center;
+  align-items: center;
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  padding: 7px;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  overflow: hidden;
+  overflow-y: auto;
+  animation: fade 0.4s;
+}
+
+.modal_active {
+  display: flex;
+}
+
+.modal__container {
+  width: 100%;
+  max-width: 550px;
+  margin: auto;
+  padding: 10px;
+  border: 2px solid #e4efff;
+  background-color: #fff;
+  position: relative;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

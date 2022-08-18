@@ -1,0 +1,7 @@
+.scoreboard__score {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 10px;
+}

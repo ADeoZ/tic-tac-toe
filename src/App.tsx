@@ -1,25 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Board from './components/Board';
+import FormNames from './components/Forms/FormNames';
+import FormWinner from './components/Forms/FormWinner';
+import Header from './components/Header';
+import Modal from './components/Modal';
+import Scoreboard from './components/Scoreboard';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  return (<>
+    <Header />
+    <main className='main'>
+      <Scoreboard />
+      <Board size={5} />
+    </main>
+    <Modal>
+      {/* <FormNames /> */}
+      <FormWinner playerName='Алексей'/>
+    </Modal>
+  </>
   );
 }
 

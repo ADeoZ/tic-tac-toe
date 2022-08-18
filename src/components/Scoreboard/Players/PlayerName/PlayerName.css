@@ -1,0 +1,10 @@
+.scoreboard__playername {
+  flex-basis: 40%;
+  word-break: break-all;
+  color: #bebebe;
+  text-align: center;
+}
+
+.scoreboard__playername_active {
+  color: #ff6d00;
+}
