@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./Board.css";
 import Tile from "./Tile";
-import { ITile, MoveType } from "../../types/interfaces";
+import { IMoveContext, ITile, MoveType } from "../../types/interfaces";
 import checkWin from "../../func/checkWin";
+import { MoveContext } from "../../App";
 
 interface BoardProps {
   size?: number;
@@ -20,7 +21,7 @@ export default function Board({ size = 3, winCallback }: BoardProps) {
 
   // два типа хода: нолик и крестик
   const moveTypes: MoveType[] = ["zero", "cross"];
-  const [currentMove, setCurrentMove] = useState(1);
+  const {current, setCurrentMove} = useContext(MoveContext) as IMoveContext;
 
   // расчёт после каждого хода
   const clickHandler = (id: number): void => {
@@ -28,17 +29,18 @@ export default function Board({ size = 3, winCallback }: BoardProps) {
     const rowIndex = Math.floor(id / size);
     setBoardMatrix((prev) =>
       prev.map((row, i) =>
-        i === rowIndex ? row.map((tile) => (tile.id === id ? { id, sign: moveTypes[currentMove] } : tile)) : row
+        i === rowIndex ? row.map((tile) => (tile.id === id ? { id, sign: moveTypes[current.move] } : tile)) : row
       )
     );
 
     // проверяем на победу
-    if (checkWin(moveTypes[currentMove], id, boardMatrix, size, size)) {
+    if (checkWin(moveTypes[current.move], id, boardMatrix, size, size)) {
+      console.log('Победа!');
       winCallback();
-      setCurrentMove(1);
+      // setCurrentMove(prev => {return {player: +!prev.player, move: 1}});
     } else {
       // меняем тип хода на противоположный
-      setCurrentMove(prev => +!prev);
+      setCurrentMove(prev => {return {player: +!prev.player, move: +!prev.move}});
     }
   };
 

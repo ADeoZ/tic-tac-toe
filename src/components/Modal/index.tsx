@@ -1,13 +1,11 @@
 import React, { createContext, useState } from "react";
+import { ModalContextType } from "../../types/interfaces";
 import "./Modal.css";
 
 interface ModalProps {
   show?: true;
   children: React.ReactNode;
 }
-
-type ModalContextType = () => void;
-
 
 export const ModalContext = createContext<ModalContextType>(() => { });
 

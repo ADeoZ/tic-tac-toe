@@ -13,3 +13,15 @@ export interface ITile {
 }
 
 export type MoveType = "cross" | "zero";
+
+export type ModalContextType = () => void;
+
+export interface IMoveContext {
+  current: ICurrentMove;
+  setCurrentMove: React.Dispatch<React.SetStateAction<ICurrentMove>>;
+}
+
+export interface ICurrentMove {
+  player: number;
+  move: number;
+}

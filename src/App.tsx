@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { createContext, useState } from "react";
 import "./App.css";
 import Board from "./components/Board";
 import FormNames from "./components/Forms/FormNames";
@@ -6,7 +6,9 @@ import FormWinner from "./components/Forms/FormWinner";
 import Header from "./components/Header";
 import Modal from "./components/Modal";
 import Scoreboard from "./components/Scoreboard";
-import { IGame } from "./types/interfaces";
+import { ICurrentMove, IGame, IMoveContext } from "./types/interfaces";
+
+export const MoveContext = createContext<IMoveContext | null>(null);
 
 function App() {
   // параметры игры: размер поля и игроки
@@ -20,10 +22,13 @@ function App() {
   };
   const needCreateGame = !game.players[0].name || !game.players[1].name;
 
+  // состояние текущего хода
+  const [currentMove, setCurrentMove] = useState<ICurrentMove>({ player: 0, move: 1 });
+
   // объявление победителя
   const [winner, setWinner] = useState<number | null>(null);
   const celebrateWin = () => {
-    setWinner(1);
+    setWinner(currentMove.player);
   }
 
   return (
@@ -36,10 +41,12 @@ function App() {
         </Modal>
       ) : (
         <main className="main">
-          <Scoreboard players={game.players} />
-          <Board size={game.boardSize} winCallback={celebrateWin}/>
+          <MoveContext.Provider value={{ current: currentMove, setCurrentMove }}>
+            <Scoreboard players={game.players} />
+            <Board size={game.boardSize} winCallback={celebrateWin} />
+          </MoveContext.Provider>
 
-          {winner && <Modal><FormWinner playerName={game.players[winner].name} /></Modal>}
+          {!(winner === null) && <Modal><FormWinner playerName={game.players[winner].name} /></Modal>}
         </main>
       )}
     </>
