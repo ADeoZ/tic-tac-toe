@@ -8,27 +8,37 @@ interface BoardProps {
 }
 
 export default function Board({ size = 3 }: BoardProps) {
-  const boardMatrix: ITile[][] = Array.from({ length: size }, (_, i) =>
+  const initialBoard: ITile[][] = Array.from({ length: size }, (_, i) =>
     Array.from({ length: size }, (_, x) => {
       return { id: i * size + x, sign: "" };
     })
   );
+  const [boardMatrix, setBoardMatrix] = useState<ITile[][]>(initialBoard);
 
-  const [boardSigns, setBoardSigns] = useState<ITile[][]>(boardMatrix);
+  const moveTypes: ( "zero" | "cross" )[]= ["zero", "cross"];
+  const [moveType, setMoveType] = useState(1);
 
   const clickHandler = (id: number): void => {
-    const row = (id + 1) % size;
-    setBoardSigns(boardMatrix);
+    const rowIndex = Math.floor(id / size);
+    setBoardMatrix((prev) =>
+      prev.map((row, i) =>
+        i === rowIndex ? row.map((tile) => (tile.id === id ? { id, sign: moveTypes[moveType] } : tile)) : row
+      )
+    );
+    setMoveType(prev => +!prev);
   };
-
-  console.log(boardMatrix);
 
   return (
     <div className="board">
       {boardMatrix.map((row, r) => (
         <div className="board__row" key={r}>
           {row.map((tile) => (
-            <Tile id={tile.id} sign={tile.sign} callback={clickHandler} key={tile.id} />
+            <Tile
+              id={tile.id}
+              sign={tile.sign}
+              callback={tile.sign ? undefined : clickHandler}
+              key={tile.id}
+            />
           ))}
         </div>
       ))}

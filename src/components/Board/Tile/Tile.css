@@ -7,11 +7,16 @@
   cursor: pointer;
 }
 
+.board__tile:hover {
+  outline: 2px solid #2196f3;
+}
+
 .board__tile_zero {
   background-image: url("../../../img/zero.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 60%;
+  cursor: auto;
 }
 
 .board__tile_cross {
@@ -19,4 +24,9 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: 80%;
+  cursor: auto;
+}
+
+.board__tile_zero:hover, .board__tile_cross:hover {
+  outline: none;
 }
