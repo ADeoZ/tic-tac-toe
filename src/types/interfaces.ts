@@ -9,5 +9,7 @@ export interface IPlayer {
 
 export interface ITile {
   id: number;
-  sign: "cross" | "zero" | "";
+  sign: MoveType | "";
 }
+
+export type MoveType = "cross" | "zero";

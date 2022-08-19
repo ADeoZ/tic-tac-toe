@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { ITile } from "../../../types/interfaces";
 import "./Tile.css";
 
@@ -6,7 +6,7 @@ interface TileProps extends ITile {
   callback?: (id: number) => void;
 }
 
-export default function Tile({ id, sign, callback }: TileProps) {
+function Tile({ id, sign, callback }: TileProps) {
   const clickHandler = () => {
     if (callback) {
       callback(id);
@@ -16,4 +16,6 @@ export default function Tile({ id, sign, callback }: TileProps) {
   const tileClass = "board__tile" + (sign ? " board__tile_" + sign : "");
 
   return <div className={tileClass} onClick={callback ? clickHandler : undefined}></div>;
-}
+};
+
+export default memo(Tile);

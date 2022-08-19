@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import "./Board.css";
 import Tile from "./Tile";
-import { ITile } from "../../types/interfaces";
+import { ITile, MoveType } from "../../types/interfaces";
+import checkWin from "../../func/checkWin";
 
 interface BoardProps {
   size?: number;
+  winCallback: () => void;
 }
 
-export default function Board({ size = 3 }: BoardProps) {
+export default function Board({ size = 3, winCallback }: BoardProps) {
+  // начальное поле размера size
   const initialBoard: ITile[][] = Array.from({ length: size }, (_, i) =>
     Array.from({ length: size }, (_, x) => {
       return { id: i * size + x, sign: "" };
@@ -15,17 +18,28 @@ export default function Board({ size = 3 }: BoardProps) {
   );
   const [boardMatrix, setBoardMatrix] = useState<ITile[][]>(initialBoard);
 
-  const moveTypes: ( "zero" | "cross" )[]= ["zero", "cross"];
-  const [moveType, setMoveType] = useState(1);
+  // два типа хода: нолик и крестик
+  const moveTypes: MoveType[] = ["zero", "cross"];
+  const [currentMove, setCurrentMove] = useState(1);
 
+  // расчёт после каждого хода
   const clickHandler = (id: number): void => {
+    // заносим новый ход в матрицу
     const rowIndex = Math.floor(id / size);
     setBoardMatrix((prev) =>
       prev.map((row, i) =>
-        i === rowIndex ? row.map((tile) => (tile.id === id ? { id, sign: moveTypes[moveType] } : tile)) : row
+        i === rowIndex ? row.map((tile) => (tile.id === id ? { id, sign: moveTypes[currentMove] } : tile)) : row
       )
     );
-    setMoveType(prev => +!prev);
+
+    // проверяем на победу
+    if (checkWin(moveTypes[currentMove], id, boardMatrix, size, size)) {
+      winCallback();
+      setCurrentMove(1);
+    } else {
+      // меняем тип хода на противоположный
+      setCurrentMove(prev => +!prev);
+    }
   };
 
   return (
