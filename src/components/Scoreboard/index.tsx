@@ -7,14 +7,15 @@ import { IPlayer } from "../../types/interfaces";
 
 interface ScoreboardProps {
   players: IPlayer[];
+  scores: number[];
 }
 
-export default function Scoreboard({ players }: ScoreboardProps) {
+export default function Scoreboard({ players, scores }: ScoreboardProps) {
   return (
     <div className="scoreboard">
       <Players players={players} />
       <CurrentMove />
-      <Score />
+      <Score scores={scores} />
     </div>
   );
 }

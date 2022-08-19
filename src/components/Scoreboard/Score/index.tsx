@@ -2,12 +2,16 @@ import React from "react";
 import "./Score.css";
 import ScoreItem from "./ScoreItem";
 
-export default function Score() {
+interface ScoreProps {
+  scores: number[];
+}
+
+export default function Score({ scores }: ScoreProps) {
   return (
     <div className="scoreboard__score">
-      <ScoreItem score={0} />
+      <ScoreItem score={scores[0]} />
       <span>счёт</span>
-      <ScoreItem score={2} />
+      <ScoreItem score={scores[1]} />
     </div>
-  )
+  );
 }

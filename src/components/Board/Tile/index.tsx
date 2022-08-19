@@ -16,6 +16,6 @@ function Tile({ id, sign, callback }: TileProps) {
   const tileClass = "board__tile" + (sign ? " board__tile_" + sign : "");
 
   return <div className={tileClass} onClick={callback ? clickHandler : undefined}></div>;
-};
+}
 
 export default memo(Tile);

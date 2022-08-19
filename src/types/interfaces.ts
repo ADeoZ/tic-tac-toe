@@ -1,6 +1,6 @@
 export interface IGame {
   players: IPlayer[];
-  boardSize: number;  
+  boardSize: number;
 }
 
 export interface IPlayer {
