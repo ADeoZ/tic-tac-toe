@@ -6,8 +6,3 @@
   flex-direction: column;
   gap: 10px;
 }
-
-.board__row {
-  display: flex;
-  gap: 10px;
-}

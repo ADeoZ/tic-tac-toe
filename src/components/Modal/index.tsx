@@ -7,23 +7,20 @@ interface ModalProps {
   children: React.ReactNode;
 }
 
-export const ModalContext = createContext<ModalContextType>(() => { });
+export const ModalContext = createContext<ModalContextType>(() => {});
 
 export default function Modal({ show = true, children }: ModalProps) {
-
   const [showState, setShowState] = useState<boolean>(show);
 
   return (
     <>
-      {showState &&
+      {showState && (
         <div className="modal modal_active">
           <div className="modal__container">
-            <ModalContext.Provider value={() => setShowState(false)}>
-              {children}
-            </ModalContext.Provider>
+            <ModalContext.Provider value={() => setShowState(false)}>{children}</ModalContext.Provider>
           </div>
         </div>
-      }
+      )}
     </>
   );
 }

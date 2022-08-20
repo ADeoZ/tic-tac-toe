@@ -1,7 +1,7 @@
 .scoreboard {
   max-width: 350px;
   min-width: 300px;
-  margin: 30px auto;
+  margin: 20px auto 30px;
   padding: 10px;
   display: flex;
   flex-direction: column;

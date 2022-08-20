@@ -8,7 +8,7 @@ export default function checkWin(
   boardMatrix: ITile[][],
   boardSize: number,
   toWin: number
-) {
+): boolean {
   const columnIndex = id % boardSize;
   const rowIndex = Math.floor(id / boardSize);
 

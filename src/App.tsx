@@ -6,15 +6,17 @@ import FormNames from "./components/Forms/FormNames";
 import FormWinner from "./components/Forms/FormWinner";
 import Header from "./components/Header";
 import Modal from "./components/Modal";
+import Rating from "./components/Rating";
 import Scoreboard from "./components/Scoreboard";
+import { saveToRating } from "./func/saveToRating";
 import { ICurrentMove, IGame, IMoveContext } from "./types/interfaces";
 
 export const MoveContext = createContext<IMoveContext | null>(null);
 
-function App() {
+export default function App() {
   // параметры игры: размер поля и игроки
-  // const initialGame: Game = { boardSize: 3, players: [{ name: "" }, { name: "" }] };
-  const initialGame: IGame = { boardSize: 10, players: [{ name: "Первый игрок" }, { name: "Второй" }] };
+  const initialGame: IGame = { boardSize: 3, players: [{ name: "" }, { name: "" }] };
+  // const initialGame: IGame = { boardSize: 3, players: [{ name: "Первый игрок" }, { name: "Второй" }] };
   const [game, setGame] = useState<IGame>(initialGame);
 
   // функция для создания новой игры
@@ -35,6 +37,8 @@ function App() {
     setScores((prev) =>
       prev.map((playerScore, i) => (i === currentMove.player ? ++playerScore : playerScore))
     );
+    // сохраняем очки в общий рейтинг
+    saveToRating(game.players[currentMove.player].name);
   };
 
   // объявление ничьей
@@ -43,6 +47,7 @@ function App() {
   return (
     <>
       <Header />
+      <Rating currentPlayers={game.players} currentScores={scores[0] + scores[1]} />
 
       {needCreateGame ? (
         <Modal>
@@ -70,5 +75,3 @@ function App() {
     </>
   );
 }
-
-export default App;

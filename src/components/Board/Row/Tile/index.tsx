@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { ITile } from "../../../types/interfaces";
+import { ITile } from "../../../../types/interfaces";
 import "./Tile.css";
 
 interface TileProps extends ITile {

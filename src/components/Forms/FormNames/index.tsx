@@ -17,7 +17,11 @@ export default function FormNames({ callback }: FormNamesProps) {
     event.preventDefault();
     if (firstNameRef.current && secondNameRef.current && boardSizeRef.current) {
       if (firstNameRef.current.value && secondNameRef.current.value && boardSizeRef.current.value) {
-        callback(firstNameRef.current.value, secondNameRef.current.value, +boardSizeRef.current.value);
+        callback(
+          firstNameRef.current.value.trim(),
+          secondNameRef.current.value.trim(),
+          +boardSizeRef.current.value
+        );
       } else {
         setError(true);
       }

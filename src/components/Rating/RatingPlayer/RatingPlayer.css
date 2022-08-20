@@ -1,0 +1,14 @@
+.rating__player {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  border-bottom: 1px solid #4a4a4a;
+}
+
+.rating__player:last-child {
+  border-bottom: none;
+}
+
+.rating__player_current .rating__name {
+  color: #ff6d00;
+}

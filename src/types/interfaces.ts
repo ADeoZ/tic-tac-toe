@@ -25,3 +25,8 @@ export interface ICurrentMove {
   player: number;
   move: number;
 }
+
+export interface IRatingPlayer {
+  player: string;
+  score: number;
+}

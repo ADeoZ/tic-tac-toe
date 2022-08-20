@@ -1,4 +1,4 @@
-.modal {  
+.modal {
   justify-content: center;
   align-items: center;
   display: none;
@@ -32,6 +32,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }

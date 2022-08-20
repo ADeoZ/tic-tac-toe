@@ -1,9 +1,10 @@
 import React, { useContext, useState } from "react";
 import "./Board.css";
-import Tile from "./Tile";
 import { IMoveContext, ITile, MoveType } from "../../types/interfaces";
 import checkWin from "../../func/checkWin";
 import { MoveContext } from "../../App";
+import Row from "./Row";
+import Undo from "./Undo";
 
 interface BoardProps {
   size?: number;
@@ -27,8 +28,32 @@ export default function Board({ size = 3, winCallback, drawCallback }: BoardProp
   // запись всех ходов
   const [allMoves, setAllMoves] = useState<number[]>([]);
 
+  // отмена хода
+  const undoHandler = () => {
+    if (allMoves.length > 0) {
+      // убираем последний ход из матрицы
+      const id = allMoves[allMoves.length - 1];
+      const rowIndex = Math.floor(id / size);
+      setBoardMatrix((prev) =>
+        prev.map((row, i) =>
+          i === rowIndex
+            ? row.map((tile) => (tile.id === id ? { id, sign: "" } : tile))
+            : row
+        )
+      );
+
+      // отменяем последний ход
+      setAllMoves((prev) => prev.slice(0, -1));
+
+      // меняем тип хода на противоположный
+      setCurrentMove((prev) => {
+        return { player: +!prev.player, move: +!prev.move };
+      });
+    }
+  };
+
   // расчёт после каждого хода
-  const clickHandler = (id: number): void => {
+  const moveHandler = (id: number): void => {
     // заносим новый ход в матрицу
     const rowIndex = Math.floor(id / size);
     setBoardMatrix((prev) =>
@@ -72,17 +97,9 @@ export default function Board({ size = 3, winCallback, drawCallback }: BoardProp
   return (
     <div className="board">
       {boardMatrix.map((row, r) => (
-        <div className="board__row" key={r}>
-          {row.map((tile) => (
-            <Tile
-              id={tile.id}
-              sign={tile.sign}
-              callback={tile.sign ? undefined : clickHandler}
-              key={tile.id}
-            />
-          ))}
-        </div>
+        <Row row={row} callback={moveHandler} key={r} />
       ))}
+      <Undo callback={undoHandler} active={allMoves.length > 0} />
     </div>
   );
 }
