@@ -1,11 +1,13 @@
 import React from "react";
-import "./MoveSymbol.css"
+import { MoveType } from "../../../../types/interfaces";
+import "./MoveSymbol.css";
 
 interface MoveSymbolProps {
-  type?: "cross" | "zero";
+  type?: MoveType;
 }
 
 export default function MoveSymbol({ type }: MoveSymbolProps) {
   const moveTypeClass = "scoreboard__movetype" + (type ? " scoreboard__movetype_" + type : "");
-  return <div className={moveTypeClass}></div>
+
+  return <div className={moveTypeClass}></div>;
 }

@@ -5,5 +5,5 @@ interface ScoreItemProps {
 }
 
 export default function ScoreItem({ score }: ScoreItemProps) {
-  return <div>{score}</div>
+  return <div>{score}</div>;
 }

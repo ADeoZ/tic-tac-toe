@@ -8,11 +8,12 @@ import Undo from "./Undo";
 
 interface BoardProps {
   size?: number;
+  toWin?: number;
   winCallback: () => void;
   drawCallback: () => void;
 }
 
-export default function Board({ size = 3, winCallback, drawCallback }: BoardProps) {
+export default function Board({ size = 3, toWin = 3, winCallback, drawCallback }: BoardProps) {
   // начальное поле размера size х size
   const initialBoard: ITile[][] = Array.from({ length: size }, (_, i) =>
     Array.from({ length: size }, (_, x) => {
@@ -36,9 +37,7 @@ export default function Board({ size = 3, winCallback, drawCallback }: BoardProp
       const rowIndex = Math.floor(id / size);
       setBoardMatrix((prev) =>
         prev.map((row, i) =>
-          i === rowIndex
-            ? row.map((tile) => (tile.id === id ? { id, sign: "" } : tile))
-            : row
+          i === rowIndex ? row.map((tile) => (tile.id === id ? { id, sign: "" } : tile)) : row
         )
       );
 
@@ -68,22 +67,14 @@ export default function Board({ size = 3, winCallback, drawCallback }: BoardProp
     setAllMoves((prev) => [...prev, id]);
 
     // проверяем на победу
-    if (checkWin(moveTypes[current.move], id, boardMatrix, size, size)) {
-      setCurrentMove((prev) => {
-        return { player: +!prev.player, move: 1 };
-      });
+    if (checkWin(moveTypes[current.move], id, boardMatrix, size, toWin)) {
+      resetBoard();
       winCallback();
-      setBoardMatrix(initialBoard);
-      setAllMoves([]);
 
       // проверяем на ничью
     } else if (allMoves.length + 1 === size * size) {
-      setCurrentMove((prev) => {
-        return { player: +!prev.player, move: 1 };
-      });
+      resetBoard();
       drawCallback();
-      setBoardMatrix(initialBoard);
-      setAllMoves([]);
 
       // продолжаем игру
     } else {
@@ -92,6 +83,15 @@ export default function Board({ size = 3, winCallback, drawCallback }: BoardProp
         return { player: +!prev.player, move: +!prev.move };
       });
     }
+  };
+
+  // сбросить доску на начало
+  const resetBoard = (): void => {
+    setCurrentMove((prev) => {
+      return { player: +!prev.player, move: 1 };
+    });
+    setBoardMatrix(initialBoard);
+    setAllMoves([]);
   };
 
   return (

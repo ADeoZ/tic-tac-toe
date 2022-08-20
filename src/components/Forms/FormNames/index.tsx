@@ -4,11 +4,11 @@ import Button from "../Button";
 import FormError from "../FormError";
 
 interface FormNamesProps {
-  callback: (player1: string, player2: string, boardSize: number) => void;
+  callback: (player1: string, player2: string, boardSize: number, toWin: number) => void;
 }
 
 export default function FormNames({ callback }: FormNamesProps) {
-  const [error, setError] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   const firstNameRef = useRef<HTMLInputElement>(null);
   const secondNameRef = useRef<HTMLInputElement>(null);
   const boardSizeRef = useRef<HTMLSelectElement>(null);
@@ -17,13 +17,18 @@ export default function FormNames({ callback }: FormNamesProps) {
     event.preventDefault();
     if (firstNameRef.current && secondNameRef.current && boardSizeRef.current) {
       if (firstNameRef.current.value && secondNameRef.current.value && boardSizeRef.current.value) {
-        callback(
-          firstNameRef.current.value.trim(),
-          secondNameRef.current.value.trim(),
-          +boardSizeRef.current.value
-        );
+        if (firstNameRef.current.value.trim() !== secondNameRef.current.value.trim()) {
+          callback(
+            firstNameRef.current.value.trim(),
+            secondNameRef.current.value.trim(),
+            +boardSizeRef.current.value,
+            +boardSizeRef.current.value // по умолчанию примем количество знаков на победу равным размеру доски
+          );
+        } else {
+          setError("Тёзки? Нельзя!");
+        }
       } else {
-        setError(true);
+        setError("Нужно всё заполнить!");
       }
     }
   };
@@ -62,7 +67,7 @@ export default function FormNames({ callback }: FormNamesProps) {
         </label>
         <Button text="Начать" />
       </form>
-      {error && <FormError text={"Нужно всё заполнить!"} />}
+      {error && <FormError text={error} />}
     </>
   );
 }

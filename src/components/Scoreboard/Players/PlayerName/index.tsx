@@ -9,5 +9,5 @@ interface PlayerNameProps {
 export default function PlayerName({ name, active }: PlayerNameProps) {
   const playerNameClass = "scoreboard__playername" + (active ? " scoreboard__playername_active" : "");
 
-  return <div className={playerNameClass}>{name}</div>
+  return <div className={playerNameClass}>{name}</div>;
 }

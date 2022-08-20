@@ -15,13 +15,13 @@ export const MoveContext = createContext<IMoveContext | null>(null);
 
 export default function App() {
   // параметры игры: размер поля и игроки
-  const initialGame: IGame = { boardSize: 3, players: [{ name: "" }, { name: "" }] };
-  // const initialGame: IGame = { boardSize: 3, players: [{ name: "Первый игрок" }, { name: "Второй" }] };
+  const initialGame: IGame = { boardSize: 3, toWin: 2, players: [{ name: "" }, { name: "" }] };
+
   const [game, setGame] = useState<IGame>(initialGame);
 
   // функция для создания новой игры
-  const createGame = (player1: string, player2: string, boardSize: number) => {
-    setGame({ boardSize, players: [{ name: player1 }, { name: player2 }] });
+  const createGame = (player1: string, player2: string, boardSize: number, toWin: number) => {
+    setGame({ boardSize, toWin, players: [{ name: player1 }, { name: player2 }] });
   };
   const needCreateGame = !game.players[0].name || !game.players[1].name;
 
@@ -45,7 +45,7 @@ export default function App() {
   const [draw, setDraw] = useState<boolean>(false);
 
   return (
-    <>
+    <React.Fragment>
       <Header />
       <Rating currentPlayers={game.players} currentScores={scores[0] + scores[1]} />
 
@@ -57,7 +57,12 @@ export default function App() {
         <main className="main">
           <MoveContext.Provider value={{ current: currentMove, setCurrentMove }}>
             <Scoreboard players={game.players} scores={scores} />
-            <Board size={game.boardSize} winCallback={celebrateWin} drawCallback={() => setDraw(true)} />
+            <Board
+              size={game.boardSize}
+              toWin={game.toWin}
+              winCallback={celebrateWin}
+              drawCallback={() => setDraw(true)}
+            />
           </MoveContext.Provider>
 
           {winner !== null && (
@@ -65,6 +70,7 @@ export default function App() {
               <FormWinner playerName={game.players[winner].name} closeCallback={() => setWinner(null)} />
             </Modal>
           )}
+
           {draw && (
             <Modal>
               <FormDraw closeCallback={() => setDraw(false)} />
@@ -72,6 +78,6 @@ export default function App() {
           )}
         </main>
       )}
-    </>
+    </React.Fragment>
   );
 }

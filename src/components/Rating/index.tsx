@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { IPlayer, IRatingPlayer } from "../../types/interfaces";
 import "./Rating.css";
 import RatingPlayer from "./RatingPlayer";
@@ -8,7 +8,7 @@ interface RatingProps {
   currentScores: number;
 }
 
-export default function Rating({ currentPlayers, currentScores }: RatingProps) {
+function Rating({ currentPlayers, currentScores }: RatingProps) {
   // переключатель таблицы
   const [toggle, setToggle] = useState(false);
   const ToggleClass = "rating__toggle" + (toggle ? " rating__toggle_active" : "");
@@ -44,3 +44,5 @@ export default function Rating({ currentPlayers, currentScores }: RatingProps) {
     </div>
   );
 }
+
+export default memo(Rating);

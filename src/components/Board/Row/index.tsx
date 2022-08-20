@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import "./Row.css";
 import { ITile } from "../../../types/interfaces";
 import Tile from "./Tile";
@@ -8,7 +8,7 @@ interface RowProps {
   callback: (id: number) => void;
 }
 
-export default function Row({ row, callback }: RowProps) {
+function Row({ row, callback }: RowProps) {
   return (
     <div className="board__row">
       {row.map((tile) => (
@@ -17,3 +17,5 @@ export default function Row({ row, callback }: RowProps) {
     </div>
   );
 }
+
+export default memo(Row);
